@@ -49,5 +49,4 @@ po/*~
 rsconnect/
 
 # ignore les fichiers DATA
-
- DATA/
+DATA/
