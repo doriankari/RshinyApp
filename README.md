@@ -9,7 +9,7 @@ Voici un aperçu de l'application :
 
 ## Comment éxécuter l'application
 - Avoir R et R studio sur votre machine
-- Téléchagez l'ensemble du projet depuis le [Répository R-Shiny](https://github.com/doriankari/RshinyApp.git)
+- Téléchagez l'ensemble du projet depuis le [Répository R-ShinyApp](https://github.com/doriankari/RshinyApp.git)
 - Téléchargez le jeu de données via ce lien [Crime-Data](https://data.lacity.org/Public-Safety/Crime-Data-from-2020-to-Present/2nrs-mtv8/about_data)
 - Mettre le fichier dans un dossier DATA que vous créez
 - Installez les packages nécéssaires en utilisant le script R : packages.R
