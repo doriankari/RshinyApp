@@ -19,7 +19,7 @@
 
 1. Clone the repo:
    ```sh
-   git clone [https://github.com/DamienL31/RshineApp/tree/main]
+   git clone [https://github.com/doriankari/RshinyApp.git]
    ```
 2. Download the repo, store the files in a folder and then create subfolders "www" in which you can put photos, "data" which will contain your data.
    
@@ -40,7 +40,7 @@ library(package)
 
 ## Application Structure
 
-- `crim_appli.R`: Defines the user and server interface
+- `app.R`: Defines the user and server interface
 - `global.R`: Contains the variables 
 - `Packages.R`: Includes all packages for build an application
 - `wwww` : Contains pictures
