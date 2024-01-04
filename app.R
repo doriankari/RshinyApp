@@ -1,6 +1,6 @@
 # # # Simulation de données de criminalité à Los Angeles
 source("packages.R")
-#source("global.R")
+source("global.R")
 
 # UI
 ui <- dashboardPage(
@@ -63,12 +63,29 @@ ui <- dashboardPage(
       tabItem(
         tabName = "graphique",
         tabsetPanel(
-          tabPanel("Armes Utilisées", icon = icon("gun")),
-          tabPanel("Sexe des Victimes", icon = icon("venus-mars")),
-          tabPanel("Ethnicité des Victimes", icon = icon("globe-americas")),
-          tabPanel("Type de Crime", icon = icon("exclamation-triangle"))
+          tabPanel("Armes Utilisées", icon = icon("gun"),
+                   selectInput("district_type_weapon", "Select a district", choices = unique(data$AREA.NAME)),
+                   plotOutput("TW_plot")
+                   
+                   ),
+          
+          tabPanel("Sexe des Victimes", icon = icon("venus-mars"),
+                   selectInput("district_sex_victims", "Select a district", choices = unique(data_ethnie$AREA.NAME)),
+                   plotOutput("TSV_plot"),
+                   ),
+          
+          tabPanel("Ethnicité des Victimes", icon = icon("globe-americas"),
+                   
+              selectInput("district_selector_ethnie", "Select a district", choices = unique(data_ethnie$AREA.NAME)),
+                   plotOutput("TEV_plot")
+                   ),
+          
+          tabPanel("Top 10 Type de Crime", icon = icon("exclamation-triangle"),
+                   selectInput("district_type_crimes", "Select a district", choices = unique(data$AREA.NAME)),
+                   plotOutput("T10C")
+                   
+                   )
         )
-        #plotOutput("graphique_output")
       ),
       tabItem(
         tabName = "data_set",
@@ -106,11 +123,89 @@ server <- function(input, output) {
         label = ~filtered_data()$Crm.Cd.Desc # Texte affiché lorsque vous survolez le marqueur
       ))
   })
-  
-  output$graphique_output <- renderPlot({
-    # Code pour créer vos graphiques en fonction des sélections (à compléter)
-    # Utilisez les données filtrées : filtered_data()
+  ###### graphs###########################################
+  output$TW_plot <- renderPlot({
+
+    top_weapons <- data %>%
+      filter(AREA.NAME == input$district_type_weapon)%>%
+      group_by(Weapon.Desc) %>%
+      summarise(nbre_occurences = n()) %>%
+      filter(!is.na(Weapon.Desc) & Weapon.Desc != "") %>%
+      top_n(10, nbre_occurences)
+    
+    ggplot(top_weapons, aes(x = reorder(Weapon.Desc, -nbre_occurences), y = nbre_occurences)) +
+      geom_bar(stat = "identity", fill = "darkblue") +
+      labs(title = paste("Top 10 Weapons - District", input$district_type_weapons),
+           x = "Types d'armes",
+           y = "Nbre d'occurrences") +
+      theme_classic() +
+      theme(axis.text.x = element_text(size = 5, angle = 55, hjust = 1, color = "darkblue"))
   })
+  
+  output$TSV_plot <- renderPlot({
+    
+    filter_data_ethnie <- data_ethnie %>%
+      filter(AREA.NAME == input$district_sex_victims)
+    
+    ggplot(filter_data_ethnie, aes(x = Vict.Sex, y = nbre_victime, fill = Vict.Sex)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      labs(title = "Nombre de Crimes par Sexe des Victimes",
+           x = "Sexe des Victimes", y = "Nombre de Crimes") +
+      scale_fill_manual(values = c("blue", "red","grey")) +  
+      theme_minimal()  
+  })
+  
+# Création d'un graphique pour l'ethnie
+  output$TEV_plot <- renderPlot({
+    
+    filter_data_ethnie <- data_ethnie %>%
+      filter(AREA.NAME == input$district_selector_ethnie)
+    
+    ggplot(filter_data_ethnie, aes(x = Vict.Descent, y = nbre_victime, fill = Vict.Descent)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      labs(title = "Nombre de Crimes par Ethnie des Victimes",
+           x = "Ethnie des Victimes", y = "Nombre de Crimes") +
+      scale_fill_manual(values = c("blue", "red","grey","pink")) +  
+      theme_minimal()  
+  })
+  
+
+  
+# Création d'un graphique à barres pour représenter le top 10 des types de crime
+  
+  output$T10C <- renderPlot({
+    data_top_crimes <- data %>%
+    filter(AREA.NAME == input$district_type_crimes)
+    
+    # Filtrer pour obtenir les top 10 types de crime
+    top_10_crime <- data_top_crimes %>%
+      group_by(Crm.Cd.Desc) %>%
+      summarise(count = n()) %>%
+      top_n(10, count)
+    
+    
+    ggplot(top_10_crime, aes(x = reorder(Crm.Cd.Desc, -count), y = count)) +
+      geom_bar(stat = "identity", fill = "skyblue", width = 0.5) +
+
+
+      labs(title = "Top 10 des Types de Crime",
+           x = "Type de Crime", y = "Nombre de Crimes") +
+      theme_minimal() +
+      coord_flip()
+  
+  
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   output$tableau <- renderDataTable({
     filtered_data()

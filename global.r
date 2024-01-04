@@ -8,21 +8,23 @@ data <- data %>%
   filter(LAT >= 24.396308 & LAT <= 49.384358 & LON >= -125.000000 & LON <= -66.934570)
 
 data_pop <- data %>%
-  filter(data$vict.sex %in% c("F", "M","X"))
+  filter(data$Vict.Sex %in% c("F", "M","X"))
 
 data_ethnie <- data_pop %>%
-  group_by(area.name, vict.descent, vict.sex) %>%
-  mutate( vict.descent = case_when(
-    vict.descent == "W" ~ "White",
-    vict.descent == "B" ~ "Black",
-    vict.descent == "H" ~ "Hispanic",
+  group_by(AREA.NAME, Vict.Descent, Vict.Sex) %>%
+  mutate( Vict.Descent = case_when(
+    Vict.Descent == "W" ~ "White",
+    Vict.Descent == "B" ~ "Black",
+    Vict.Descent == "H" ~ "Hispanic",
     TRUE ~ "Other"
   ),
-  vict.sex = case_when(
-    vict.sex == "F" ~ "Ladies",
-    vict.sex == "M" ~ "Mens",
+  Vict.Sex = case_when(
+    Vict.Sex == "F" ~ "Ladies",
+    Vict.Sex == "M" ~ "Mens",
     TRUE ~ "Other"
   )) %>%
   summarise(nbre_victime = n())
 
 print("data load")
+
+
