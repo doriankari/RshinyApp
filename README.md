@@ -23,7 +23,7 @@ Voici un aperçu de l'application :
 ### Onglet "Home"
 Cet onglet présente une introduction à l'application, affiche quelques chiffres clés et comprend un graphique montrant le nombre de délits par année.
 
-### Onglet "graph"
+### Onglet "Graphs"
 Sélectionnez une année dans les deux menus déroulants et visualisez la répartition des délits en fonction du sexe et de l'âge des victimes pour l'année en question.
 Type de délit
 
