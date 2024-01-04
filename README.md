@@ -5,7 +5,6 @@ L'application CRIMEPULSE L.A offre une expérience intéractive pour explorer et
 Voici un aperçu de l'application : 
 ![DASHBOARD](https://github.com/doriankari/RshinyApp/assets/146330254/7e148bd2-2c4e-4fac-a900-4d62fbc1d170)
 
-<img width="1440" alt="apercu" src="https://github.com/CeliaMarty/Projet-R-Shiny-/assets/152623002/36008021-53c6-4b47-96ca-9f1686ab0da9">
 
 
 ## Comment éxécuter l'application
