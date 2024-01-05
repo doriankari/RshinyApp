@@ -2,6 +2,8 @@
 
 ## Los Angeles Crimes Application 
 
+
+
 *This application offers an in-depth exploration of crime data in Los Angeles,
   providing a comprehensive analysis of trends, variations, and criminal 
   patterns prevalent within this metropolis.
